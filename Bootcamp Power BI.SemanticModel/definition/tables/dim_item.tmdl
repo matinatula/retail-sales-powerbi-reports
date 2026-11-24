@@ -1,0 +1,122 @@
+table dim_item
+	lineageTag: 043a2d4c-631b-4748-b17d-1742fcd75bea
+
+	column 'Item Key'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7076e8d7-1723-42df-b39a-d5f79c6a7e80
+		summarizeBy: none
+		sourceColumn: Item Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Item ID'
+		dataType: string
+		lineageTag: 6fe6b747-dcc5-487e-b78b-c9dfd44f6a0f
+		summarizeBy: none
+		sourceColumn: Item ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Item Description'
+		dataType: string
+		lineageTag: 2177c3cd-9774-4962-a7e2-e75dd1511e37
+		summarizeBy: none
+		sourceColumn: Item Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: 317ea453-3169-4554-9e30-8995e1adcbd1
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	column Class
+		dataType: string
+		lineageTag: 2c589ba5-320f-4209-a8d1-da186da2fbf2
+		summarizeBy: none
+		sourceColumn: Class
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subclass
+		dataType: string
+		lineageTag: 29d17d2f-b1d2-40a7-b985-5674fd3e2a39
+		summarizeBy: none
+		sourceColumn: Subclass
+
+		annotation SummarizationSetBy = Automatic
+
+	column Size
+		dataType: string
+		lineageTag: 9c329092-da02-4f31-a246-228ff77d6cd4
+		summarizeBy: none
+		sourceColumn: Size
+
+		annotation SummarizationSetBy = Automatic
+
+	column Colour
+		dataType: string
+		lineageTag: aeb42794-1897-494b-bd09-c912f6959c04
+		summarizeBy: none
+		sourceColumn: Colour
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Effective From'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ae139926-f721-4742-b4a8-48872f536ceb
+		summarizeBy: none
+		sourceColumn: Effective From
+
+		variation Variation
+			isDefault
+			relationship: 6d20ecb3-eae4-4699-bbec-6ebca778a710
+			defaultHierarchy: LocalDateTable_f156cfcd-f8c9-4da9-a3dc-e4213f0a3ff1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Effective To'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 74b43711-c947-4057-bf90-9be070408d5e
+		summarizeBy: none
+		sourceColumn: Effective To
+
+		variation Variation
+			isDefault
+			relationship: f419815c-e26b-44ed-a25d-04f8f75055bd
+			defaultHierarchy: LocalDateTable_ec46dbe4-499a-4371-b1c7-03fa6541e25b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Current Flag'
+		dataType: string
+		lineageTag: bfe40aa4-68d7-41f9-a991-6e933275a3e7
+		summarizeBy: none
+		sourceColumn: Current Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_item = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\matina.tuladhar\Downloads\files (1)\dim_item.csv"),[Delimiter=",", Columns=11, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Item Key", Int64.Type}, {"Item ID", type text}, {"Item Description", type text}, {"Department", type text}, {"Class", type text}, {"Subclass", type text}, {"Size", type text}, {"Colour", type text}, {"Effective From", type date}, {"Effective To", type date}, {"Current Flag", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

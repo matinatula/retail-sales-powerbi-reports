@@ -1,0 +1,106 @@
+table dim_location
+	lineageTag: a4a19408-6d7a-4523-a335-398682186f8a
+
+	column 'Location Key'
+		dataType: int64
+		formatString: 0
+		lineageTag: ad8cda76-178f-40cb-bb9f-ca15e1fc0286
+		summarizeBy: none
+		sourceColumn: Location Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Location ID'
+		dataType: string
+		lineageTag: 1fd4da4b-2af1-455c-aa09-dc3bf695fba5
+		summarizeBy: none
+		sourceColumn: Location ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Location Name'
+		dataType: string
+		lineageTag: 28d270a6-8fd1-4774-8256-a169c9b080c5
+		summarizeBy: none
+		sourceColumn: Location Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Location Type'
+		dataType: string
+		lineageTag: f10de802-3317-4b88-9035-160b2a8c15c0
+		summarizeBy: none
+		sourceColumn: Location Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column District
+		dataType: string
+		lineageTag: d08f4c71-de2e-4c66-97c1-32364dcf925b
+		summarizeBy: none
+		sourceColumn: District
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 4490057f-e7bd-4d69-8e94-6ababa97b8b4
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Effective From'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 90edeccb-f75c-4f85-97b7-0adb793f8498
+		summarizeBy: none
+		sourceColumn: Effective From
+
+		variation Variation
+			isDefault
+			relationship: d03244f1-14be-4c0e-9ca9-da774d967b1e
+			defaultHierarchy: LocalDateTable_a7d8e7d4-7cd6-4576-ade8-7a216618569f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Effective To'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0477e831-cb4b-4709-87dd-f45eba0a7fad
+		summarizeBy: none
+		sourceColumn: Effective To
+
+		variation Variation
+			isDefault
+			relationship: bc42fdca-48bd-4c45-9d3b-f07265e89f60
+			defaultHierarchy: LocalDateTable_955adc00-4eb1-4a75-83ac-4ebc127204e5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Current Flag'
+		dataType: string
+		lineageTag: 53805176-48e0-4b0d-a488-896ab06bd924
+		summarizeBy: none
+		sourceColumn: Current Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_location = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\matina.tuladhar\Downloads\files (1)\dim_location.csv"),[Delimiter=",", Columns=9, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Location Key", Int64.Type}, {"Location ID", type text}, {"Location Name", type text}, {"Location Type", type text}, {"District", type text}, {"Region", type text}, {"Effective From", type date}, {"Effective To", type date}, {"Current Flag", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

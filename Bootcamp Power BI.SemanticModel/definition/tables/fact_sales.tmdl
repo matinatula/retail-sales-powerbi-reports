@@ -1,0 +1,104 @@
+table fact_sales
+	lineageTag: 71f9fb04-ac7b-4d3d-ae17-536fc1b6a2aa
+
+	measure 'Row Count' = COUNTROWS ( fact_sales )
+		formatString: 0
+		lineageTag: 05c12b2e-da9d-4aab-9e8c-c7c62762c674
+
+	column 'Date Key'
+		dataType: int64
+		formatString: 0
+		lineageTag: af337ab8-c82d-4c9f-80e9-2aa8a6027b84
+		summarizeBy: none
+		sourceColumn: Date Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Item Key'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6fd05dd3-3048-43c1-8259-b6f70af13124
+		summarizeBy: none
+		sourceColumn: Item Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Location Key'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c69f213-8b9f-4cf0-b379-a617903d06e4
+		summarizeBy: none
+		sourceColumn: Location Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Txn ID'
+		dataType: string
+		lineageTag: 2a277ac8-f59e-4c9b-a668-3f751d33f2a1
+		summarizeBy: none
+		sourceColumn: Txn ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Txn Line No'
+		dataType: int64
+		formatString: 0
+		lineageTag: d7e4a069-ce48-467d-aaa2-14b422b97a43
+		summarizeBy: sum
+		sourceColumn: Txn Line No
+
+		annotation SummarizationSetBy = Automatic
+
+	column Units
+		dataType: int64
+		formatString: 0
+		lineageTag: 49826805-c338-47b4-bf00-4422b0d58067
+		summarizeBy: sum
+		sourceColumn: Units
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gross Sales Amount'
+		dataType: double
+		lineageTag: af96495e-69ff-4e74-920b-ae9c4731710b
+		summarizeBy: sum
+		sourceColumn: Gross Sales Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Discount Amount'
+		dataType: double
+		lineageTag: 83f6b252-6d79-4185-a5b3-f1670b081cd3
+		summarizeBy: sum
+		sourceColumn: Discount Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Net Sales Amount'
+		dataType: double
+		lineageTag: 8290cdc8-b79c-4585-b9d6-713aec46f606
+		summarizeBy: sum
+		sourceColumn: Net Sales Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_sales = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\matina.tuladhar\Downloads\files (1)\fact_sales.csv"),[Delimiter=",", Columns=9, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Date Key", Int64.Type}, {"Item Key", Int64.Type}, {"Location Key", Int64.Type}, {"Txn ID", type text}, {"Txn Line No", Int64.Type}, {"Units", Int64.Type}, {"Gross Sales Amount", type number}, {"Discount Amount", type number}, {"Net Sales Amount", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

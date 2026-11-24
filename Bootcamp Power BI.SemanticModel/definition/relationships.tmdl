@@ -1,0 +1,37 @@
+relationship 5b134256-47d1-4d3a-8929-23b9971fa3db
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_date.'Calendar Date'
+	toColumn: LocalDateTable_f81fdcc3-a012-4cfc-96c3-5f0315f77013.Date
+
+relationship 6d20ecb3-eae4-4699-bbec-6ebca778a710
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_item.'Effective From'
+	toColumn: LocalDateTable_f156cfcd-f8c9-4da9-a3dc-e4213f0a3ff1.Date
+
+relationship f419815c-e26b-44ed-a25d-04f8f75055bd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_item.'Effective To'
+	toColumn: LocalDateTable_ec46dbe4-499a-4371-b1c7-03fa6541e25b.Date
+
+relationship d03244f1-14be-4c0e-9ca9-da774d967b1e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_location.'Effective From'
+	toColumn: LocalDateTable_a7d8e7d4-7cd6-4576-ade8-7a216618569f.Date
+
+relationship bc42fdca-48bd-4c45-9d3b-f07265e89f60
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_location.'Effective To'
+	toColumn: LocalDateTable_955adc00-4eb1-4a75-83ac-4ebc127204e5.Date
+
+relationship AutoDetected_2ce726ae-6456-41bc-a827-f9ce8238b888
+	fromColumn: fact_sales.'Date Key'
+	toColumn: dim_date.'Date Key'
+
+relationship AutoDetected_050d0d23-444f-452b-817c-e18d3e2eccca
+	fromColumn: fact_sales.'Item Key'
+	toColumn: dim_item.'Item Key'
+
+relationship AutoDetected_644f4e3f-305c-406b-ba37-2b3bf2e539d6
+	fromColumn: fact_sales.'Location Key'
+	toColumn: dim_location.'Location Key'
+

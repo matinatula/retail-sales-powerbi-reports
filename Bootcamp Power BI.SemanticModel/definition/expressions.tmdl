@@ -1,0 +1,7 @@
+expression DataFolder = "C:\Users\matina.tuladhar\Downloads\files (1)" meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
+	lineageTag: 9f59d837-2078-45fa-ab4c-c8dfc814abb9
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

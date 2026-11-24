@@ -1,0 +1,101 @@
+table dim_date
+	lineageTag: 12026641-702e-4758-b542-22882749bfec
+
+	column 'Date Key'
+		dataType: int64
+		formatString: 0
+		lineageTag: 93fd70a0-b19c-4c42-a8ac-989bdd7ed1de
+		summarizeBy: none
+		sourceColumn: Date Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calendar Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5f4048b4-cb05-4143-a02b-0733de2cedc8
+		summarizeBy: none
+		sourceColumn: Calendar Date
+
+		variation Variation
+			isDefault
+			relationship: 5b134256-47d1-4d3a-8929-23b9971fa3db
+			defaultHierarchy: LocalDateTable_f81fdcc3-a012-4cfc-96c3-5f0315f77013.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Day of Week'
+		dataType: string
+		lineageTag: 53aa684a-0659-430c-8e8c-bf72049f1ec1
+		summarizeBy: none
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ISO Week'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f41d944-d2a7-469e-98ac-eb71c99162d5
+		summarizeBy: sum
+		sourceColumn: ISO Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: 5cce4452-db77-4ccd-a6ac-d71fcdd1d043
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6217e53c-3b34-46ce-b1ce-b90430061e97
+		summarizeBy: sum
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: 0883b57b-4854-46ad-9b43-fd48d7c5b4f4
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 6459eb08-c9bb-4350-8429-e4524f3ab709
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Weekend Flag'
+		dataType: string
+		lineageTag: 04f9dd5f-200f-4559-a0ae-f94826db85d6
+		summarizeBy: none
+		sourceColumn: Weekend Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_date = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\matina.tuladhar\Downloads\files (1)\dim_date.csv"),[Delimiter=",", Columns=9, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Date Key", Int64.Type}, {"Calendar Date", type date}, {"Day of Week", type text}, {"ISO Week", Int64.Type}, {"Month", type text}, {"Month Number", Int64.Type}, {"Quarter", type text}, {"Year", Int64.Type}, {"Weekend Flag", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

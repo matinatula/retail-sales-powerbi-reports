@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "3dbecab283a302b696c8",
+  "position": {
+    "x": 20,
+    "y": 590,
+    "z": 1002,
+    "height": 280,
+    "width": 850,
+    "tabOrder": 1002
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_sales"
+                    }
+                  },
+                  "Property": "Selected Quarter Label"
+                }
+              },
+              "queryRef": "fact_sales.Selected Quarter Label",
+              "nativeQueryRef": "Selected Quarter Label"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

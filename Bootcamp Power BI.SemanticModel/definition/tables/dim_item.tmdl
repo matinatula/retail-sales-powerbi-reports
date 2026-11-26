@@ -73,11 +73,6 @@ table dim_item
 		summarizeBy: none
 		sourceColumn: Effective From
 
-		variation Variation
-			isDefault
-			relationship: 6d20ecb3-eae4-4699-bbec-6ebca778a710
-			defaultHierarchy: LocalDateTable_f156cfcd-f8c9-4da9-a3dc-e4213f0a3ff1.'Date Hierarchy'
-
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
@@ -88,11 +83,6 @@ table dim_item
 		lineageTag: 74b43711-c947-4057-bf90-9be070408d5e
 		summarizeBy: none
 		sourceColumn: Effective To
-
-		variation Variation
-			isDefault
-			relationship: f419815c-e26b-44ed-a25d-04f8f75055bd
-			defaultHierarchy: LocalDateTable_ec46dbe4-499a-4371-b1c7-03fa6541e25b.'Date Hierarchy'
 
 		annotation SummarizationSetBy = Automatic
 

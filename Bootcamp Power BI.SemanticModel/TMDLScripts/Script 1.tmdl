@@ -1,0 +1,152 @@
+createOrReplace
+
+	ref table fact_sales
+
+		measure 'Gross Sales' = SUM ( fact_sales[Gross Sales Amount] )
+			formatString: \$#,0
+
+		measure Discount = SUM ( fact_sales[Discount Amount] )
+			formatString: \$#,0
+
+		measure 'Net Sales' = [Gross Sales] - [Discount]
+			formatString: \$#,0
+
+		measure Units = SUM ( fact_sales[Units Qty] )
+			formatString: #,0
+
+		measure Transactioncount = DISTINCTCOUNT ( fact_sales[Txn ID] )
+			formatString: #,0
+
+		measure 'Active Locations' = COUNTROWS ( FILTER ( VALUES ( dim_location[Location ID] ), [Net Sales] <> 0 ) )
+			formatString: #,0
+
+		measure ABV = DIVIDE ( [Net Sales], [Transactioncount] )
+			formatString: \$#,0
+
+		measure UPT = DIVIDE ( [Units], [Transactioncount] )
+			formatString: 0.00
+
+		measure ASP = DIVIDE ( [Net Sales], [Units] )
+			formatString: \$#,0
+
+		measure 'Discount %' = DIVIDE ( [Discount], [Gross Sales] )
+			formatString: 0.0%
+
+		measure 'Sales per Location' = DIVIDE ( [Net Sales], [Active Locations] )
+			formatString: \$#,0
+
+		measure 'Contribution %' = DIVIDE ( [Net Sales], CALCULATE ( [Net Sales], ALLSELECTED () ) )
+			formatString: 0.0%
+
+		measure 'Last Trading Date' = VAR _k = CALCULATE ( MAX ( fact_sales[Date Key] ), REMOVEFILTERS () ) RETURN CALCULATE ( MAX ( dim_date[Calendar Date] ), REMOVEFILTERS (), dim_date[Date Key] = _k )
+			formatString: dd mmm yyyy
+
+		measure 'Selected Quarter' = VAR _last = [Last Trading Date] VAR _default = YEAR ( _last ) & " Q" & QUARTER ( _last ) RETURN SELECTEDVALUE ( 'Quarter Selector'[Quarter Label], _default )
+
+		measure 'Quarter Start' = VAR _q = [Selected Quarter] RETURN CALCULATE ( MIN ( dim_date[Calendar Date] ), REMOVEFILTERS ( dim_date ), dim_date[Year Quarter] = _q )
+			formatString: dd mmm yyyy
+
+		measure 'Quarter End' = VAR _q = [Selected Quarter] RETURN CALCULATE ( MAX ( dim_date[Calendar Date] ), REMOVEFILTERS ( dim_date ), dim_date[Year Quarter] = _q )
+			formatString: dd mmm yyyy
+
+		measure 'Selected Quarter Label' = "Selected quarter: " & [Selected Quarter] & " | " & FORMAT ( [Quarter Start], "dd mmm yyyy" ) & " - " & FORMAT ( [Quarter End], "dd mmm yyyy" )
+
+		measure 'Selected Q Index' = VAR _q = [Selected Quarter] RETURN CALCULATE ( MAX ( dim_date[Quarter Index] ), REMOVEFILTERS ( dim_date ), dim_date[Year Quarter] = _q )
+
+		measure 'Quarter Offset' = [Selected Q Index] - MAX ( dim_date[Quarter Index] )
+
+		measure 'Show Selected Qtr' = IF ( [Quarter Offset] = 0, 1, 0 )
+
+		measure 'Show Last 2 Qtrs' = VAR _o = [Quarter Offset] RETURN IF ( _o = 1 || _o = 2, 1, 0 )
+
+		measure 'Show Last 4 Qtrs' = VAR _o = [Quarter Offset] RETURN IF ( _o >= 0 && _o <= 3, 1, 0 )
+
+		measure 'PY Gross Sales' = VAR _asof = [Last Trading Date] VAR _py = CALCULATETABLE ( VALUES ( dim_date[PY Date] ), dim_date[Calendar Date] <= _asof ) RETURN CALCULATE ( [Gross Sales], REMOVEFILTERS ( dim_date ), TREATAS ( _py, dim_date[Calendar Date] ) )
+			formatString: \$#,0
+
+		measure 'PY Discount' = VAR _asof = [Last Trading Date] VAR _py = CALCULATETABLE ( VALUES ( dim_date[PY Date] ), dim_date[Calendar Date] <= _asof ) RETURN CALCULATE ( [Discount], REMOVEFILTERS ( dim_date ), TREATAS ( _py, dim_date[Calendar Date] ) )
+			formatString: \$#,0
+
+		measure 'PY Units' = VAR _asof = [Last Trading Date] VAR _py = CALCULATETABLE ( VALUES ( dim_date[PY Date] ), dim_date[Calendar Date] <= _asof ) RETURN CALCULATE ( [Units], REMOVEFILTERS ( dim_date ), TREATAS ( _py, dim_date[Calendar Date] ) )
+			formatString: #,0
+
+		measure 'PY Transactioncount' = VAR _asof = [Last Trading Date] VAR _py = CALCULATETABLE ( VALUES ( dim_date[PY Date] ), dim_date[Calendar Date] <= _asof ) RETURN CALCULATE ( [Transactioncount], REMOVEFILTERS ( dim_date ), TREATAS ( _py, dim_date[Calendar Date] ) )
+			formatString: #,0
+
+		measure 'PY Net Sales' = IF ( ISBLANK ( [PY Gross Sales] ), BLANK (), [PY Gross Sales] - [PY Discount] )
+			formatString: \$#,0
+
+		measure 'PY ABV' = DIVIDE ( [PY Net Sales], [PY Transactioncount] )
+			formatString: \$#,0
+
+		measure 'PY UPT' = DIVIDE ( [PY Units], [PY Transactioncount] )
+			formatString: 0.00
+
+		measure 'PY ASP' = DIVIDE ( [PY Net Sales], [PY Units] )
+			formatString: \$#,0
+
+		measure 'PY Discount %' = DIVIDE ( [PY Discount], [PY Gross Sales] )
+			formatString: 0.0%
+
+		measure 'Net Sales YoY' = IF ( ISBLANK ( [PY Net Sales] ), BLANK (), [Net Sales] - [PY Net Sales] )
+			formatString: \$#,0
+
+		measure 'Net Sales YoY %' = DIVIDE ( [Net Sales YoY], [PY Net Sales] )
+			formatString: 0.0%
+
+		measure 'Units YoY' = IF ( ISBLANK ( [PY Units] ), BLANK (), [Units] - [PY Units] )
+			formatString: #,0
+
+		measure 'Units YoY %' = DIVIDE ( [Units YoY], [PY Units] )
+			formatString: 0.0%
+
+		measure 'Transactioncount YoY' = IF ( ISBLANK ( [PY Transactioncount] ), BLANK (), [Transactioncount] - [PY Transactioncount] )
+			formatString: #,0
+
+		measure 'Transactioncount YoY %' = DIVIDE ( [Transactioncount YoY], [PY Transactioncount] )
+			formatString: 0.0%
+
+		measure 'ABV YoY' = IF ( ISBLANK ( [PY ABV] ), BLANK (), [ABV] - [PY ABV] )
+			formatString: \$#,0
+
+		measure 'ABV YoY %' = DIVIDE ( [ABV YoY], [PY ABV] )
+			formatString: 0.0%
+
+		measure 'UPT YoY' = IF ( ISBLANK ( [PY UPT] ), BLANK (), [UPT] - [PY UPT] )
+			formatString: 0.00
+
+		measure 'UPT YoY %' = DIVIDE ( [UPT YoY], [PY UPT] )
+			formatString: 0.0%
+
+		measure 'Discount % YoY pts' = IF ( ISBLANK ( [PY Discount %] ), BLANK (), ( [Discount %] - [PY Discount %] ) * 100 )
+			formatString: +0.0;-0.0;0.0
+
+		measure 'Card Net Sales' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Net Sales], dim_date[Year Quarter] = _q )
+			formatString: \$#,0
+
+		measure 'Card Net Sales YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Net Sales YoY %], dim_date[Year Quarter] = _q )
+			formatString: 0.0%
+
+		measure 'Card Units' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Units], dim_date[Year Quarter] = _q )
+			formatString: #,0
+
+		measure 'Card Units YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Units YoY %], dim_date[Year Quarter] = _q )
+			formatString: 0.0%
+
+		measure 'Card Transactioncount' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Transactioncount], dim_date[Year Quarter] = _q )
+			formatString: #,0
+
+		measure 'Card Transactioncount YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Transactioncount YoY %], dim_date[Year Quarter] = _q )
+			formatString: 0.0%
+
+		measure 'Card ABV' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [ABV], dim_date[Year Quarter] = _q )
+			formatString: \$#,0
+
+		measure 'Card ABV YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [ABV YoY %], dim_date[Year Quarter] = _q )
+			formatString: 0.0%
+
+		measure 'Card Discount %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Discount %], dim_date[Year Quarter] = _q )
+			formatString: 0.0%
+
+		measure 'Card Discount % YoY pts' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Discount % YoY pts], dim_date[Year Quarter] = _q )
+			formatString: +0.0;-0.0;0.0

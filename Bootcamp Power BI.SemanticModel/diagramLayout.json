@@ -19,7 +19,7 @@
             "height": 296,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 4
         },
         {
           "location": {
@@ -32,7 +32,7 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 1
         },
         {
           "location": {
@@ -45,7 +45,7 @@
             "height": 296,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 2
         },
         {
           "location": {
@@ -58,11 +58,23 @@
             "height": 296,
             "width": 234
           },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 753.76606185936453,
+            "y": 396.90371422367838
+          },
+          "nodeIndex": "Quarter Selector",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
           "zIndex": 0
         }
       ],
       "name": "All tables",
-      "zoomValue": 39.334123249997404,
+      "zoomValue": 55.434883713801476,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

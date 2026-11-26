@@ -1,0 +1,19 @@
+table 'Quarter Selector'
+	lineageTag: 4c485c19-88f8-482e-9c93-6f5237a03ae7
+
+	column 'Quarter Label'
+		lineageTag: 2fab1a66-5318-41bc-a0dc-d663602a007d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter Label]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Quarter Selector' = calculated
+		mode: import
+		source =
+				
+				DISTINCT ( SELECTCOLUMNS ( dim_date, "Quarter Label", dim_date[Year] & " " & dim_date[Quarter] ) )
+
+	annotation PBI_Id = 94c5aab9fd0d46c5828d41022fe12f9e
+

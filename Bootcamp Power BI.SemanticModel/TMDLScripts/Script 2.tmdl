@@ -1,0 +1,36 @@
+createOrReplace
+
+	ref table fact_sales
+
+		measure 'Net Sales YoY %' = DIVIDE ( [Net Sales YoY], [PY Net Sales] )
+			formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+
+		measure 'Units YoY %' = DIVIDE ( [Units YoY], [PY Units] )
+			formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+
+		measure 'Transactioncount YoY %' = DIVIDE ( [Transactioncount YoY], [PY Transactioncount] )
+			formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+
+		measure 'ABV YoY %' = DIVIDE ( [ABV YoY], [PY ABV] )
+			formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+
+		measure 'UPT YoY %' = DIVIDE ( [UPT YoY], [PY UPT] )
+			formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+
+		measure 'Discount % YoY pts' = IF ( ISBLANK ( [PY Discount %] ), BLANK (), ( [Discount %] - [PY Discount %] ) * 100 )
+			formatString: \▲ +0.0 \p\t\s;\▼ -0.0 \p\t\s;0.0 \p\t\s
+
+		measure 'Card Net Sales YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Net Sales YoY %], dim_date[Year Quarter] = _q )
+			formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+
+		measure 'Card Units YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Units YoY %], dim_date[Year Quarter] = _q )
+			formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+
+		measure 'Card Transactioncount YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Transactioncount YoY %], dim_date[Year Quarter] = _q )
+			formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+
+		measure 'Card ABV YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [ABV YoY %], dim_date[Year Quarter] = _q )
+			formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+
+		measure 'Card Discount % YoY pts' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Discount % YoY pts], dim_date[Year Quarter] = _q )
+			formatString: \▲ +0.0 \p\t\s;\▼ -0.0 \p\t\s;0.0 \p\t\s

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
-  "name": "5467fe0aba2939e6d89e",
+  "name": "46884b08364c813380d0",
   "position": {
-    "x": 10,
-    "y": 0,
-    "z": 0,
-    "height": 280,
-    "width": 280,
-    "tabOrder": 0
+    "x": 770,
+    "y": 145,
+    "z": 12005,
+    "height": 92.5,
+    "width": 240,
+    "tabOrder": 12005
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "fact_sales"
                     }
                   },
-                  "Property": "Card Net Sales"
+                  "Property": "Card ABV"
                 }
               },
-              "queryRef": "fact_sales.Card Net Sales",
-              "nativeQueryRef": "Card Net Sales"
+              "queryRef": "fact_sales.Card ABV",
+              "nativeQueryRef": "Card ABV"
             }
           ]
         }

@@ -1,0 +1,32 @@
+createOrReplace
+
+	ref table fact_sales
+
+		measure 'Selected Quarter Label' = "Quarter to date | Selected quarter: " & [Selected Quarter] & " | " & FORMAT ( [Quarter Start], "dd mmm yyyy" ) & " - " & FORMAT ( [Quarter End], "dd mmm yyyy" )
+
+		measure 'Card Net Sales YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Net Sales YoY %], dim_date[Year Quarter] = _q )
+			formatString: \▲ +0.0% \Y\o\Y;\▼ -0.0% \Y\o\Y;0.0%
+
+		measure 'Card Units YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Units YoY %], dim_date[Year Quarter] = _q )
+			formatString: \▲ +0.0% \Y\o\Y;\▼ -0.0% \Y\o\Y;0.0%
+
+		measure 'Card Transactioncount YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Transactioncount YoY %], dim_date[Year Quarter] = _q )
+			formatString: \▲ +0.0% \Y\o\Y;\▼ -0.0% \Y\o\Y;0.0%
+
+		measure 'Card ABV YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [ABV YoY %], dim_date[Year Quarter] = _q )
+			formatString: \▲ +0.0% \Y\o\Y;\▼ -0.0% \Y\o\Y;0.0%
+
+		measure 'Card Discount % YoY pts' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Discount % YoY pts], dim_date[Year Quarter] = _q )
+			formatString: \▲ +0.0 \p\t\s \Y\o\Y;\▼ -0.0 \p\t\s \Y\o\Y;0.0 \p\t\s
+
+		measure 'Card Net Sales YoY Color' = VAR _v = [Card Net Sales YoY %] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v >= 0, "#2E7D32", "#C62828" ) )
+
+		measure 'Card Units YoY Color' = VAR _v = [Card Units YoY %] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v >= 0, "#2E7D32", "#C62828" ) )
+
+		measure 'Card Transactioncount YoY Color' = VAR _v = [Card Transactioncount YoY %] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v >= 0, "#2E7D32", "#C62828" ) )
+
+		measure 'Card ABV YoY Color' = VAR _v = [Card ABV YoY %] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v >= 0, "#2E7D32", "#C62828" ) )
+
+		measure 'Card Discount YoY Color' = VAR _v = [Card Discount % YoY pts] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v <= 0, "#2E7D32", "#C62828" ) )
+
+		measure 'Net Sales YoY Color' = VAR _v = [Net Sales YoY] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v >= 0, "#2E7D32", "#C62828" ) )

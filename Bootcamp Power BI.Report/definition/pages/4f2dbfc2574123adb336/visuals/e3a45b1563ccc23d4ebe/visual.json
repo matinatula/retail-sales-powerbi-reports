@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "e3a45b1563ccc23d4ebe",
+  "position": {
+    "x": 1020,
+    "y": 147,
+    "z": 12003,
+    "height": 92.5,
+    "width": 240,
+    "tabOrder": 12003
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_sales"
+                    }
+                  },
+                  "Property": "Card Discount %"
+                }
+              },
+              "queryRef": "fact_sales.Card Discount %",
+              "nativeQueryRef": "Card Discount %"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -68,8 +68,8 @@ table fact_sales
 		formatString: dd mmm yyyy
 		lineageTag: 3fb05941-53bc-4713-85a9-f4c466907019
 
-	measure 'Selected Quarter Label' = "Selected quarter: " & [Selected Quarter] & " | " & FORMAT ( [Quarter Start], "dd mmm yyyy" ) & " - " & FORMAT ( [Quarter End], "dd mmm yyyy" )
-		lineageTag: 4efda870-38f7-4006-9545-fc19aafe5e8b
+	measure 'Selected Quarter Label' = "Quarter to date | Selected quarter: " & [Selected Quarter] & " | " & FORMAT ( [Quarter Start], "dd mmm yyyy" ) & " - " & FORMAT ( [Quarter End], "dd mmm yyyy" )
+		lineageTag: bd7521b6-abbb-4d71-9635-a44c7ed2a1e6
 
 	measure 'Selected Q Index' = VAR _q = [Selected Quarter] RETURN CALCULATE ( MAX ( dim_date[Quarter Index] ), REMOVEFILTERS ( dim_date ), dim_date[Year Quarter] = _q )
 		lineageTag: f95cebf1-e26b-4e87-84f2-80b0cf2c7805
@@ -127,84 +127,102 @@ table fact_sales
 		lineageTag: 79127e27-464b-4cd7-9861-611fd047f4c6
 
 	measure 'Net Sales YoY %' = DIVIDE ( [Net Sales YoY], [PY Net Sales] )
-		formatString: 0.0%
-		lineageTag: 75b7cdf6-d5b5-472b-8069-4167d177d9ca
+		formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+		lineageTag: c6ab4ff8-ec41-4517-927f-1a0f1bb25af8
 
 	measure 'Units YoY' = IF ( ISBLANK ( [PY Units] ), BLANK (), [Units] - [PY Units] )
 		formatString: #,0
 		lineageTag: 8afd4d5f-1db4-4e2a-b17d-c27988c7435b
 
 	measure 'Units YoY %' = DIVIDE ( [Units YoY], [PY Units] )
-		formatString: 0.0%
-		lineageTag: 48b8ec5d-3d77-41d7-938d-d6864207a8a9
+		formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+		lineageTag: 5eb65bda-401b-4da3-91b0-996a266633d0
 
 	measure 'Transactioncount YoY' = IF ( ISBLANK ( [PY Transactioncount] ), BLANK (), [Transactioncount] - [PY Transactioncount] )
 		formatString: #,0
 		lineageTag: 692d914d-602b-465c-b772-7d52877952c8
 
 	measure 'Transactioncount YoY %' = DIVIDE ( [Transactioncount YoY], [PY Transactioncount] )
-		formatString: 0.0%
-		lineageTag: 849bc949-093b-414a-827d-9386bce01245
+		formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+		lineageTag: c77aa14b-49d5-4493-8537-a04712636341
 
 	measure 'ABV YoY' = IF ( ISBLANK ( [PY ABV] ), BLANK (), [ABV] - [PY ABV] )
 		formatString: \$#,0
 		lineageTag: 528367f0-30a8-44a4-826a-16789f3c441a
 
 	measure 'ABV YoY %' = DIVIDE ( [ABV YoY], [PY ABV] )
-		formatString: 0.0%
-		lineageTag: 70ddc7a9-38f7-45f2-8e0b-ff4a356ac84d
+		formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+		lineageTag: 6cb7cf6e-95a3-47ef-ad1b-9129b0bb42f0
 
 	measure 'UPT YoY' = IF ( ISBLANK ( [PY UPT] ), BLANK (), [UPT] - [PY UPT] )
 		formatString: 0.00
 		lineageTag: 41140fb2-d137-48fc-911a-12680e374983
 
 	measure 'UPT YoY %' = DIVIDE ( [UPT YoY], [PY UPT] )
-		formatString: 0.0%
-		lineageTag: 2fa275ce-6002-4955-b1ee-e7dfc32c75f2
+		formatString: \▲ +0.0%;\▼ -0.0%;0.0%
+		lineageTag: 60ecb548-5ce0-4939-8f6a-7db61b9b931b
 
 	measure 'Discount % YoY pts' = IF ( ISBLANK ( [PY Discount %] ), BLANK (), ( [Discount %] - [PY Discount %] ) * 100 )
-		formatString: +0.0;-0.0;0.0
-		lineageTag: 4cc048c7-3903-4bfd-aacf-e95b4fc43d10
+		formatString: \▲ +0.0 \p\t\s;\▼ -0.0 \p\t\s;0.0 \p\t\s
+		lineageTag: 6667ec4e-fc02-4fbf-94d5-b42a77265cce
 
 	measure 'Card Net Sales' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Net Sales], dim_date[Year Quarter] = _q )
 		formatString: \$#,0
 		lineageTag: c7d06537-3feb-4c22-a1c3-43b2a88a0e9d
 
 	measure 'Card Net Sales YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Net Sales YoY %], dim_date[Year Quarter] = _q )
-		formatString: 0.0%
-		lineageTag: c870484f-983c-4d77-8e7e-36286126822c
+		formatString: \▲ +0.0% \Y\o\Y;\▼ -0.0% \Y\o\Y;0.0%
+		lineageTag: 305283ec-0fcd-41dd-b81f-188ba728e60c
 
 	measure 'Card Units' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Units], dim_date[Year Quarter] = _q )
 		formatString: #,0
 		lineageTag: 757bbc40-16ae-4ce5-9c4c-fee7174c918d
 
 	measure 'Card Units YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Units YoY %], dim_date[Year Quarter] = _q )
-		formatString: 0.0%
-		lineageTag: 2c0eae24-cc57-46cc-a0cc-d03438a21f7c
+		formatString: \▲ +0.0% \Y\o\Y;\▼ -0.0% \Y\o\Y;0.0%
+		lineageTag: 32b4f264-358d-4737-a5a4-5f6336625261
 
 	measure 'Card Transactioncount' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Transactioncount], dim_date[Year Quarter] = _q )
 		formatString: #,0
 		lineageTag: 6818851a-1d65-4acc-94ae-e3fd86aff5d7
 
 	measure 'Card Transactioncount YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Transactioncount YoY %], dim_date[Year Quarter] = _q )
-		formatString: 0.0%
-		lineageTag: b8c0cc97-0b1c-41c2-95c9-b65cb20671ce
+		formatString: \▲ +0.0% \Y\o\Y;\▼ -0.0% \Y\o\Y;0.0%
+		lineageTag: bf20baca-c000-46bb-88d5-c4df75ce1328
 
 	measure 'Card ABV' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [ABV], dim_date[Year Quarter] = _q )
 		formatString: \$#,0
 		lineageTag: dc9018e3-8ef8-4c68-9f9f-db3e23b21656
 
 	measure 'Card ABV YoY %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [ABV YoY %], dim_date[Year Quarter] = _q )
-		formatString: 0.0%
-		lineageTag: b0d21aa4-755b-4d69-9857-ceb0c4496070
+		formatString: \▲ +0.0% \Y\o\Y;\▼ -0.0% \Y\o\Y;0.0%
+		lineageTag: 63edfc3d-e5d7-4c3e-9335-d47a8f10221a
 
 	measure 'Card Discount %' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Discount %], dim_date[Year Quarter] = _q )
 		formatString: 0.0%
 		lineageTag: 1e2886bf-da52-4baa-adb3-e98bff67c661
 
 	measure 'Card Discount % YoY pts' = VAR _q = [Selected Quarter] RETURN CALCULATE ( [Discount % YoY pts], dim_date[Year Quarter] = _q )
-		formatString: +0.0;-0.0;0.0
-		lineageTag: 39f2d133-631f-428b-8a88-bba5668a8d33
+		formatString: \▲ +0.0 \p\t\s \Y\o\Y;\▼ -0.0 \p\t\s \Y\o\Y;0.0 \p\t\s
+		lineageTag: 79c8aeca-9cab-4850-b736-3834714254f7
+
+	measure 'Card Net Sales YoY Color' = VAR _v = [Card Net Sales YoY %] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v >= 0, "#2E7D32", "#C62828" ) )
+		lineageTag: 2902c23d-8d42-418b-98d9-496fea849f88
+
+	measure 'Card Units YoY Color' = VAR _v = [Card Units YoY %] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v >= 0, "#2E7D32", "#C62828" ) )
+		lineageTag: 5d931606-56a8-4df4-a7a4-75a6e9de266e
+
+	measure 'Card Transactioncount YoY Color' = VAR _v = [Card Transactioncount YoY %] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v >= 0, "#2E7D32", "#C62828" ) )
+		lineageTag: 7d42e9e3-3015-4d2c-83dc-b7b12585ea29
+
+	measure 'Card ABV YoY Color' = VAR _v = [Card ABV YoY %] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v >= 0, "#2E7D32", "#C62828" ) )
+		lineageTag: 06ed91c8-18cd-42e4-91e4-739482041d6e
+
+	measure 'Card Discount YoY Color' = VAR _v = [Card Discount % YoY pts] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v <= 0, "#2E7D32", "#C62828" ) )
+		lineageTag: f9d6cc14-d686-44a0-bb1a-ba5df8410c99
+
+	measure 'Net Sales YoY Color' = VAR _v = [Net Sales YoY] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v >= 0, "#2E7D32", "#C62828" ) )
+		lineageTag: 50d53bb7-a1ff-44c8-a91d-76346eda3da6
 
 	column 'Date Key'
 		dataType: int64

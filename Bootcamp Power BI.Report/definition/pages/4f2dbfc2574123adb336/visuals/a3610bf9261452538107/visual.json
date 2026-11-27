@@ -4,10 +4,10 @@
   "position": {
     "x": 520,
     "y": 237,
-    "z": 12008,
+    "z": 20000,
     "height": 37.5,
     "width": 240,
-    "tabOrder": 12008
+    "tabOrder": 20000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "fact_sales"
                     }
                   },
-                  "Property": "Card ABV YoY %"
+                  "Property": "Card Transactioncount YoY %"
                 }
               },
-              "queryRef": "fact_sales.Card ABV YoY %",
-              "nativeQueryRef": "Card ABV YoY %"
+              "queryRef": "fact_sales.Card Transactioncount YoY %",
+              "nativeQueryRef": "Card Transactioncount YoY %"
             }
           ]
         }
@@ -77,7 +77,7 @@
                           "Entity": "fact_sales"
                         }
                       },
-                      "Property": "Card Net Sales YoY Color"
+                      "Property": "Card Transactioncount YoY Color"
                     }
                   }
                 }

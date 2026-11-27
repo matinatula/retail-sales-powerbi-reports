@@ -4,10 +4,10 @@
   "position": {
     "x": 770,
     "y": 145,
-    "z": 12005,
+    "z": 17000,
     "height": 92.5,
     "width": 240,
-    "tabOrder": 12005
+    "tabOrder": 17000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "fact_sales.Card ABV",
-              "nativeQueryRef": "Card ABV"
+              "nativeQueryRef": "ABV",
+              "displayName": "ABV"
             }
           ]
         }

@@ -4,10 +4,10 @@
   "position": {
     "x": 520,
     "y": 145,
-    "z": 12007,
+    "z": 19000,
     "height": 92.5,
     "width": 240,
-    "tabOrder": 12007
+    "tabOrder": 19000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "fact_sales.Card Transactioncount",
-              "nativeQueryRef": "Card Transactioncount"
+              "nativeQueryRef": "Transaction_count",
+              "displayName": "Transaction_count"
             }
           ]
         }

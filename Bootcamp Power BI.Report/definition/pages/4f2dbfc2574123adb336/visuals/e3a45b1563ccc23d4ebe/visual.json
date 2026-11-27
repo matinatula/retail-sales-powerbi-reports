@@ -4,10 +4,10 @@
   "position": {
     "x": 1020,
     "y": 147,
-    "z": 12003,
+    "z": 15000,
     "height": 92.5,
     "width": 240,
-    "tabOrder": 12003
+    "tabOrder": 15000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "fact_sales.Card Discount %",
-              "nativeQueryRef": "Card Discount %"
+              "nativeQueryRef": "Discount %",
+              "displayName": "Discount %"
             }
           ]
         }

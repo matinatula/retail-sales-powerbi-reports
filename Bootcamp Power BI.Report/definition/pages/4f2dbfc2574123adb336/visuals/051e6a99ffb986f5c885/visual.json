@@ -4,10 +4,10 @@
   "position": {
     "x": 770,
     "y": 237,
-    "z": 12006,
+    "z": 18000,
     "height": 37.5,
     "width": 240,
-    "tabOrder": 12006
+    "tabOrder": 18000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -77,7 +77,7 @@
                           "Entity": "fact_sales"
                         }
                       },
-                      "Property": "Card Net Sales YoY Color"
+                      "Property": "Card ABV YoY Color"
                     }
                   }
                 }
@@ -91,5 +91,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "fb3219ac0a18ea7dbb73",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_sales"
+              }
+            },
+            "Property": "Card ABV YoY %"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
